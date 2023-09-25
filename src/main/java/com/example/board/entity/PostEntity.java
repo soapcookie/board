@@ -19,6 +19,9 @@ public class PostEntity {
     private String title; // 제목
     private String content; // 내용
 
+    @Enumerated(EnumType.STRING)
+    private CategoryEnum category;
+
     @CreatedDate
     private LocalDateTime regDate; // 등록 날짜
 
@@ -30,12 +33,6 @@ public class PostEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId") // 외래 키 지정
     private UserEntity user;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryId") // 외래 키 지정
-    private CategoryEntity category;
-
 
 
     public Long getId() {

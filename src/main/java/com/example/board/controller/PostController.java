@@ -37,7 +37,7 @@ public class PostController {
     public ResponseEntity<PostDto> updatePost(@PathVariable Long postId, @RequestBody PostDto postDto) {
 
         PostDto updatedPost = postService.updatePost(postId, postDto);
-        // HttpStatus.OK 상태 코드와 함께 업데이트된 게시물을 반환합니다.
+
         return ResponseEntity.status(HttpStatus.OK).body(updatedPost);
     }
 
