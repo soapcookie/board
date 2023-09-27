@@ -17,7 +17,6 @@ public class PostDto {
     private String content;
     private UserDto userName;
     private LocalDateTime createdDate;
-    //dto로 받았어야했나..?
     private List<CommentEntity> comments; //댓글 리스트 추가
     private List<CategoryEnum> categories; //카테고리 표시
     private List<LikeEntity> likes; //좋아요 표시

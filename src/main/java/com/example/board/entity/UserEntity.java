@@ -14,6 +14,7 @@ import javax.persistence.Id;
 public class UserEntity {
     @Id //기본 키와 매핑될 필드에 지정
     @GeneratedValue //식별자 자동 생성, column에 필요
+//    테이블 내 칼럼추가
     private Long loginId;
 
     @Column(nullable = false, unique = true)
@@ -24,6 +25,9 @@ public class UserEntity {
 
     @Column(length = 20, nullable = false)
     private String username; //유저의 실명 또는 닉네임
+
+    @Column(nullable = false)
+    private Long userId;
 
     public void setEmail(String email) {
         this.email = email;

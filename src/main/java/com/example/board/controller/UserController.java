@@ -1,5 +1,7 @@
 package com.example.board.controller;
 
+import com.example.board.dto.UserDto;
+import com.example.board.dto.UserUpdateDto;
 import com.example.board.entity.UserEntity;
 import com.example.board.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,8 @@ public class UserController {
 
     // 사용자 생성 엔드포인트
     @PostMapping("/")
-    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity) {
-        UserEntity createdUser = userService.createUser(userEntity);
+    public ResponseEntity<UserEntity> createUser(@RequestBody UserDto userDto) {
+        UserEntity createdUser = userService.createUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
@@ -29,8 +31,8 @@ public class UserController {
 
     // 사용자 업데이트 엔드포인트
     @PutMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @RequestBody UserEntity userEntity) {
-        UserEntity updatedUser = userService.updateUser(id, userEntity);
+    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @RequestBody UserUpdateDto userUpdateDto) {
+        UserEntity updatedUser = userService.updateUser(id, userUpdateDto);
         return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
     }
 
