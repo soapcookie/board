@@ -25,7 +25,7 @@ public class PostEntity {
     @CreatedDate
     private LocalDateTime regDate; // 등록 날짜
 
-    private LocalDateTime update; // 수정 날짜 추가
+    private LocalDateTime updateDate; // 수정 날짜 추가
 
     private int viewCount; // 조회수
     private boolean delYn; // 삭제 여부
@@ -68,11 +68,11 @@ public class PostEntity {
     }
 
     public LocalDateTime getUpdate() {
-        return update;
+        return updateDate;
     }
 
-    public void setUpdate(LocalDateTime update) {
-        this.update = update;
+    public void setUpdate(LocalDateTime updateDate) {
+        this.updateDate = updateDate;
     }
 
     public int getViewCount() {
