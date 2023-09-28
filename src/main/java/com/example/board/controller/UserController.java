@@ -25,8 +25,8 @@ public class UserController {
     // 사용자 조회 엔드포인트
     @GetMapping("/{id}")
     public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {
-        UserEntity userEntity = userService.getUserById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(userEntity);
+        UserEntity user = userService.getUserById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     // 사용자 업데이트 엔드포인트

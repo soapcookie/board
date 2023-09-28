@@ -4,9 +4,10 @@ import com.example.board.dto.UserDto;
 import com.example.board.dto.UserUpdateDto;
 import com.example.board.entity.UserEntity;
 import com.example.board.repository.UserRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
@@ -32,18 +33,25 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserEntity updateUser(Long id, UserUpdateDto userUpdateDto) {
-
-        // 사용자 업데이트 로직
-        UserEntity existingUser = userRepository.findById(id).orElse(null);
-        if (existingUser == null) {
-            return null; // 사용자가 존재하지 않을 경우 null 반환 또는 예외 처리
+    public UserEntity updateUser(Long userId, UserUpdateDto userUpdateDto) {
+        // userId로 사용자 조회
+        Optional<UserEntity> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            UserEntity user = optionalUser.get();
+            // 업데이트할 필드 설정
+            if (userUpdateDto.getUsername() != null) {
+                user.setUsername(userUpdateDto.getUsername());
+            }
+            if (userUpdateDto.getEmail() != null) {
+                user.setEmail(userUpdateDto.getEmail());
+            }
+            // 사용자 저장 및 반환
+            return userRepository.save(user);
+        } else {
+            throw new RuntimeException("사용자를 찾을 수 없습니다.");
         }
-
-        BeanUtils.copyProperties(userUpdateDto, existingUser);
-
-        return userRepository.save(existingUser);
     }
+
 
     @Override
     public void deleteUser(Long id) {
