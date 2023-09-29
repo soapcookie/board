@@ -22,6 +22,9 @@ public class CommentEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity user; // 댓글 작성자
 
+    @Column
+    private Integer likeCnt;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_comment_id")
     private List<CommentEntity> parentComment; // 부모 댓글, List로 일대다 컨테이너 생성

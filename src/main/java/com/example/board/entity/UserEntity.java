@@ -26,9 +26,6 @@ public class UserEntity {
     @Column(length = 20, nullable = false)
     private String username; //유저의 실명 또는 닉네임
 
-    @Column(nullable = false)
-    private Long userId;
-
     public void setEmail(String email) {
         this.email = email;
     }

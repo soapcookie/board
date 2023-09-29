@@ -30,6 +30,9 @@ public class PostEntity {
     private int viewCount; // 조회수
     private boolean delYn; // 삭제 여부
 
+    @Column
+    private Integer likeCnt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId") // 외래 키 지정
     private UserEntity user;
