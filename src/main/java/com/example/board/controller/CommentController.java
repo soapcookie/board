@@ -26,5 +26,5 @@ public class CommentController {
         return ResponseEntity.ok("답글이 성공적으로 추가되었습니다.");
     }
 
-    // 다른 API 엔드포인트들과 필요한 기능들을 추가할 수 있습니다.
+
 }
