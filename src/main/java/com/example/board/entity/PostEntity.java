@@ -1,11 +1,13 @@
 package com.example.board.entity;
 
+import com.example.board.dto.PostDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "post_entity")
 @Getter
@@ -19,8 +21,16 @@ public class PostEntity {
     private String title; // 제목
     private String content; // 내용
 
+    @ElementCollection(targetClass = CategoryEnum.class)  // 열거형 리스트 설정
     @Enumerated(EnumType.STRING)
-    private CategoryEnum category;
+    private List<CategoryEnum> categories;  // 카테고리 리스트 필드
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL) // CommentEntity와의 관계 설정
+    private List<CommentEntity> comments; // 댓글 리스트 필드
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL) // LikeEntity와의 관계 설정
+    private List<LikeEntity> likes; // 좋아요 리스트 필드
+
 
     @CreatedDate
     private LocalDateTime regDate; // 등록 날짜
@@ -31,74 +41,22 @@ public class PostEntity {
     private boolean delYn; // 삭제 여부
 
     @Column
-    private Integer likeCnt;
+    private int likeCnt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId") // 외래 키 지정
     private UserEntity user;
 
-
-    public Long getId() {
-        return id;
+//    기본생성자
+    public PostEntity(PostDto postDto) {
+        this.title = postDto.getTitle();
+        this.content = postDto.getContent();
+        this.categories = postDto.getCategories();
+        this.regDate = LocalDateTime.now();
+        this.updateDate = null;
+        this.viewCount = 0;
+        this.delYn = false;
+        this.likeCnt = 0;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDateTime getRegDate() {
-        return regDate;
-    }
-
-    public void setRegDate(LocalDateTime regDate) {
-        this.regDate = regDate;
-    }
-
-    public LocalDateTime getUpdate() {
-        return updateDate;
-    }
-
-    public void setUpdate(LocalDateTime updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public int getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(int viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    public boolean isDelYn() {
-        return delYn;
-    }
-
-    public void setDelYn(boolean delYn) {
-        this.delYn = delYn;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
 }

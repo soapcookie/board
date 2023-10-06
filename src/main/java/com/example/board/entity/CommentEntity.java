@@ -23,25 +23,10 @@ public class CommentEntity {
     private UserEntity user; // 댓글 작성자
 
     @Column
-    private Integer likeCnt;
+    private int likeCnt;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinColumn(name = "parent_comment_id")
     private List<CommentEntity> parentComment; // 부모 댓글, List로 일대다 컨테이너 생성
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public List<CommentEntity> getParentComment() {
-        return parentComment;
-    }
-
-    public void setParentComment(List<CommentEntity> parentComment) {
-        this.parentComment = parentComment;
-    }
+    
 }

@@ -3,6 +3,7 @@ package com.example.board.dto;
 import com.example.board.entity.CategoryEnum;
 import com.example.board.entity.CommentEntity;
 import com.example.board.entity.LikeEntity;
+import com.example.board.entity.PostEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,5 +25,26 @@ public class PostDto {
     public void setId(Long id) {
         this.id = id;
     }
+
+
+    public static PostDto convertToDto(PostEntity postEntity) {
+        PostDto postDto = new PostDto();
+        postDto.setId(postEntity.getId());
+        postDto.setTitle(postEntity.getTitle());
+        postDto.setContent(postEntity.getContent());
+        // set other properties as needed
+        return postDto;
+    }
+
+
+    public PostDto(PostEntity postEntity){
+        this.title = postEntity.getTitle();
+        this.content = postEntity.getContent();
+        this.createdDate = postEntity.getRegDate();
+        this.comments = postEntity.getComments();
+        this.categories = postEntity.getCategories();
+        this.likes = postEntity.getLikes();
+    }
+
 
 }
