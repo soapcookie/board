@@ -24,15 +24,19 @@ public class CommentServiceImpl implements CommentService {
             throw new IllegalArgumentException("상위 댓글이 존재하지 않습니다.");
         }
 
-        CommentEntity reply = new CommentEntity();
-        reply.setContent(replyContent);
-
-        List<CommentEntity> parentCommentList = new ArrayList<>();
-        parentCommentList.add(parentComment); // parentComment를 List에 추가
-
-        reply.setParentComment(parentCommentList); // List를 전달
-       
+        CommentEntity reply = CommentEntity.builder()
+                .content(replyContent)
+                .parentComment(parentComment)
+                .build();
 
         commentRepository.save(reply);
+        commentRepository.save(reply);
+
+        // 부모 댓글의 자식 댓글 목록에 새 댓글 추가
+        parentComment.getReplies().add(reply);
+
+        // 부모 댓글을 다시 데이터베이스에 저장
+        commentRepository.save(parentComment);
     }
+
 }

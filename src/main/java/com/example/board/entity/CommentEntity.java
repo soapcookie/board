@@ -1,15 +1,17 @@
 package com.example.board.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@Builder
 public class CommentEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId; // 댓글 식별 아이디
@@ -25,8 +27,14 @@ public class CommentEntity {
     @Column
     private int likeCnt;
 
-    @OneToMany
-    @JoinColumn(name = "parent_comment_id")
-    private List<CommentEntity> parentComment; // 부모 댓글, List로 일대다 컨테이너 생성
-    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private CommentEntity parentComment;
+
+    public CommentEntity(String content, PostEntity post, UserEntity user) {
+        this.content = content;
+        this.post = post;
+        this.user = user;
+    }
+
+
 }
