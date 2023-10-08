@@ -1,15 +1,18 @@
 package com.example.board.service;
 
 import com.example.board.entity.CommentEntity;
+import com.example.board.entity.ReplyEntity;
 import com.example.board.repository.CommentRepository;
+import com.example.board.repository.ReplyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
 public class CommentServiceImpl implements CommentService {
+
+    @Autowired
+    private ReplyRepository replyRepository;
 
     private final CommentRepository commentRepository;
 
@@ -24,13 +27,13 @@ public class CommentServiceImpl implements CommentService {
             throw new IllegalArgumentException("상위 댓글이 존재하지 않습니다.");
         }
 
-        CommentEntity reply = CommentEntity.builder()
+        ReplyEntity reply = ReplyEntity.builder()
                 .content(replyContent)
                 .parentComment(parentComment)
                 .build();
 
-        commentRepository.save(reply);
-        commentRepository.save(reply);
+        // 엔티티 저장
+        replyRepository.save(reply);
 
         // 부모 댓글의 자식 댓글 목록에 새 댓글 추가
         parentComment.getReplies().add(reply);

@@ -40,20 +40,20 @@ public class PostServiceImpl implements PostService {
     }
 
 
+
     @Override
     public PostDto updatePost(Long postId, PostDto postDto) {
-        // 1. postId를 사용하여 업데이트할 게시물을 조회합니다.
+        // postId를 사용하여 업데이트할 게시물을 조회합니다.
         PostEntity existingPost = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("게시물을 찾을 수 없습니다."));
 
-        // 2. 업데이트할 데이터를 기존 게시물에 복사합니다.
-        existingPost.setTitle(postDto.getTitle());
-        existingPost.setContent(postDto.getContent());
+        // 업데이트 메서드를 호출하여 필드를 업데이트합니다.
+        existingPost.update(postDto.getTitle(), postDto.getContent());
 
-        // 3. 게시물 저장 로직을 수행하고 업데이트된 게시물 엔티티를 반환합니다.
+        // 데이터베이스에 업데이트된 게시물을 저장하고 업데이트된 게시물 엔티티를 반환합니다.
         PostEntity updatedPost = postRepository.save(existingPost);
 
-        // 4. 업데이트된 게시물 엔티티를 PostDto로 다시 변환하여 반환합니다.
+        // 업데이트된 게시물 엔티티를 PostDto로 다시 변환하여 반환합니다.
         return new PostDto(updatedPost);
     }
 

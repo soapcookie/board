@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@Builder
 public class CommentEntity {
 
     @Id
@@ -30,11 +30,21 @@ public class CommentEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private CommentEntity parentComment;
 
-    public CommentEntity(String content, PostEntity post, UserEntity user) {
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
+    private List<ReplyEntity> replies;
+
+    @Builder
+    public CommentEntity(Long commentId, String content, PostEntity post, UserEntity user, int likeCnt, CommentEntity parentComment, List<ReplyEntity> replies) {
+        this.commentId = commentId;
         this.content = content;
         this.post = post;
         this.user = user;
+        this.likeCnt = likeCnt;
+        this.parentComment = parentComment;
+        this.replies = replies;
     }
 
-
+    public List<ReplyEntity> getReplies() {
+        return replies;
+    }
 }
