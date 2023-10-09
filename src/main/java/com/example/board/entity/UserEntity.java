@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.transaction.Transactional;
 
 @Getter
 @NoArgsConstructor
@@ -24,6 +25,18 @@ public class UserEntity {
 
     @Column(length = 20, nullable = false)
     private String username; // 유저의 실명 또는 닉네임
+
+    @Transactional
+    public void updateUser(String username, String email) {
+        if (username != null) {
+            this.username = username;
+        }
+
+        if (email != null) {
+            this.email = email;
+        }
+    }
+
 
 
 }

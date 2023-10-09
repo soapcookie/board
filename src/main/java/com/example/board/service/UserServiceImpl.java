@@ -7,7 +7,8 @@ import com.example.board.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 
 @Service
@@ -31,26 +32,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public UserEntity updateUser(Long userId, UserUpdateDto userUpdateDto) {
-        // userId로 사용자 조회
-        UserEntity optionalUser = userRepository.findById(userId).orElseThrow("사용자를 찾을 수 없습니다.");
-//        이거 다 바꾸기
-//        if (optionalUser.isPresent()) {
-//            UserEntity user = optionalUser.get();
-//            // 업데이트할 필드 설정
-//            if (userUpdateDto.getUsername() != null) {
-//                user.setUsername(userUpdateDto.getUsername());
-//            }
-//            if (userUpdateDto.getEmail() != null) {
-//                user.setEmail(userUpdateDto.getEmail());
-//            }
-        // 사용자 저장 및 반환
-//            return userRepository.save(user);
-//        } else {
-//            throw new RuntimeException("사용자를 찾을 수 없습니다.");
-//        }
-    }
+        @Override
+        @Transactional
+        public UserEntity updateUser(Long userId, UserUpdateDto updateDto) {
+            // 사용자 업데이트를 위해 사용자 정보를 데이터베이스에서 가져옴
+            UserEntity existingUser = userRepository.findById(userId)
+                    .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+            // UserUpdateDto에서 업데이트할 필드를 가져와서 User 엔터티의 updateUser 메소드를 호출
+            existingUser.updateUser(updateDto.getUsername(), updateDto.getEmail());
+
+            // 업데이트된 사용자를 저장하고 반환
+            return userRepository.save(existingUser);
+        }
 
 
 

@@ -31,9 +31,9 @@ public class UserController {
 
     // 사용자 업데이트 엔드포인트
     @PutMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @RequestBody UserUpdateDto userUpdateDto) {
-        UserEntity updatedUser = userService.updateUser(id, userUpdateDto);
-        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+    public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserUpdateDto userUpdateDto) {
+        userService.updateUser(id, userUpdateDto);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     // 사용자 삭제 엔드포인트
