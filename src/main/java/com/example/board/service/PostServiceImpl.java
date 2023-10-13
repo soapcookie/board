@@ -1,19 +1,25 @@
 package com.example.board.service;
 
-import com.example.board.dto.PostDto;
+import com.example.board.dto.PostListResponseDto;
+import com.example.board.dto.PostResponseDto;
 import com.example.board.entity.PostEntity;
 import com.example.board.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.board.dto.PostDto.convertToDto;
 
 @Service
+@RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
-    @Autowired
-    private PostRepository postRepository; // 게시물 저장소에 대한 의존성 주입
+
 
     @Override
     public PostDto createPost(PostDto postDto) {
@@ -26,7 +32,7 @@ public class PostServiceImpl implements PostService {
         PostEntity savedPost = postRepository.save(post);
 
         // 저장된 게시물 엔티티를 PostDto로 다시 변환하여 반환합니다.
-        return convertToDto(savedPost);
+        return postDto(savedPost);
     }
 
     @Override
@@ -36,7 +42,7 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(() -> new EntityNotFoundException("게시물을 찾을 수 없습니다."));
 
         // 조회한 게시물 엔티티를 PostDto로 변환하여 반환합니다.
-        return convertToDto(post);
+        return PostDto(post);
     }
 
 
@@ -67,5 +73,22 @@ public class PostServiceImpl implements PostService {
         // 게시물을 삭제합니다.
         postRepository.delete(post);
     }
+
+    @Transactional(readOnly = true)
+    public PostResponseDto searchById(Long id) {
+        PostEntity postEntity= PostRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
+        return new PostResponseDto(postEntity);
+    }
+    @Transactional(readOnly = true)
+    public List<PostListResponseDto> searchAllDesc() {
+        return PostRepository.findAllByOrderByIdDesc().stream()
+                .map(PostListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+    @Transactional
+    public void delete(Long id) {
+        PostEntity postEntity = PostRepository.findById(id).orElseThrow(()->
+                new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+        PostRepository.delete(postEntity);
 
 }

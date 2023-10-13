@@ -1,8 +1,6 @@
 package com.example.board.controller;
 
-import com.example.board.dto.PostDto;
 import com.example.board.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

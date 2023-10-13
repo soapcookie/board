@@ -1,7 +1,5 @@
 package com.example.board.controller;
 
-import com.example.board.dto.UserDto;
-import com.example.board.dto.UserUpdateDto;
 import com.example.board.entity.UserEntity;
 import com.example.board.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

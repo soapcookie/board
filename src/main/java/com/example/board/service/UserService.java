@@ -1,7 +1,5 @@
 package com.example.board.service;
 
-import com.example.board.dto.UserDto;
-import com.example.board.dto.UserUpdateDto;
 import com.example.board.entity.UserEntity;
 
 public interface UserService {

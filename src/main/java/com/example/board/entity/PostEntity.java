@@ -1,6 +1,7 @@
 package com.example.board.entity;
 
-import com.example.board.dto.PostDto;
+import com.example.board.dto.PostResponseDto;
+import com.example.board.enums.CategoryEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,8 +17,8 @@ public class PostEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 게시물 아이디
 
+    private Long id;
     private String title; // 제목
     private String content; // 내용
 
@@ -48,10 +49,10 @@ public class PostEntity {
     private UserEntity user;
 
 //    기본생성자
-    public PostEntity(PostDto postDto) {
-        this.title = postDto.getTitle();
-        this.content = postDto.getContent();
-        this.categories = postDto.getCategories();
+    public PostEntity(PostResponseDto postResponseDto) {
+        this.title=title;
+        this.content=content;
+        this.categories=categories;
         this.regDate = LocalDateTime.now();
         this.updateDate = null;
         this.viewCount = 0;
