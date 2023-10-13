@@ -21,8 +21,8 @@ public class CommentEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private PostEntity post; // 게시물
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private UserEntity user; // 댓글 작성자
+    @Column
+    private String writer;
 
     @Column
     private int likeCnt;
@@ -34,11 +34,11 @@ public class CommentEntity {
     private List<ReplyEntity> replies;
 
     @Builder
-    public CommentEntity(Long commentId, String content, PostEntity post, String username, int likeCnt, CommentEntity parentComment, List<ReplyEntity> replies) {
+    public CommentEntity(Long commentId, String content, PostEntity post, String writer, int likeCnt, CommentEntity parentComment, List<ReplyEntity> replies) {
         this.commentId = commentId;
         this.content = content;
         this.post = post;
-        this.user = user;
+        this.writer = writer;
         this.likeCnt = likeCnt;
         this.parentComment = parentComment;
         this.replies = replies;

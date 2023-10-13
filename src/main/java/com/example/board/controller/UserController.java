@@ -1,6 +1,7 @@
 package com.example.board.controller;
 
-import com.example.board.entity.UserEntity;
+import com.example.board.dto.UserDto;
+import com.example.board.dto.UserUpdateDto;
 import com.example.board.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,15 +16,15 @@ public class UserController {
 
     // 사용자 생성 엔드포인트
     @PostMapping("/")
-    public ResponseEntity<UserEntity> createUser(@RequestBody UserDto userDto) {
-        UserEntity createdUser = userService.createUser(userDto);
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+        UserDto createdUser = userService.createUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     // 사용자 조회 엔드포인트
     @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {
-        UserEntity user = userService.getUserById(id);
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+        UserDto user = userService.getUserById(id);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 

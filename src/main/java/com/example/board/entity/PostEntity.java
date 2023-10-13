@@ -1,6 +1,6 @@
 package com.example.board.entity;
 
-import com.example.board.dto.PostResponseDto;
+import com.example.board.dto.PostCreatRequestDto;
 import com.example.board.enums.CategoryEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +21,7 @@ public class PostEntity {
     private Long id;
     private String title; // 제목
     private String content; // 내용
+    private String writer; //작성자
 
     @ElementCollection(targetClass = CategoryEnum.class)  // 열거형 리스트 설정
     @Enumerated(EnumType.STRING)
@@ -38,32 +39,31 @@ public class PostEntity {
 
     private LocalDateTime updateDate; // 수정 날짜 추가
 
-    private int viewCount; // 조회수
+    private int viewCnt; // 조회수
     private boolean delYn; // 삭제 여부
 
-    @Column
+    @Column(name = "like_cnt")
     private int likeCnt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId") // 외래 키 지정
     private UserEntity user;
 
-//    기본생성자
-    public PostEntity(PostResponseDto postResponseDto) {
-        this.title=title;
-        this.content=content;
-        this.categories=categories;
-        this.regDate = LocalDateTime.now();
-        this.updateDate = null;
-        this.viewCount = 0;
-        this.delYn = false;
-        this.likeCnt = 0;
-    }
+
+
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
     }
+
+
+    public PostEntity(PostCreatRequestDto postCreatRequestDto){
+        this.writer = postCreatRequestDto.getWriter();
+        this.title = postCreatRequestDto.getTitle();
+        this.content = postCreatRequestDto.getContent();
+    }
+
 
 
 }

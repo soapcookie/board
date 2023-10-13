@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PostListResponseDto {
-    private String username;
     private String title;
+    private String writer;
 
-    public PostListResponseDto(String username, String title){
-        this.username = username;
-        this.title= title;
+    public PostListResponseDto(PostEntity postEntity){
+        this.title = postEntity.getTitle();
+        this.writer = postEntity.getWriter();
     }
+
+
 
 }

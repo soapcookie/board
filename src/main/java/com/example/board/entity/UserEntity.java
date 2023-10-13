@@ -1,5 +1,6 @@
 package com.example.board.entity;
 
+import com.example.board.dto.UserDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -7,14 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.transaction.Transactional;
+
 
 @Getter
 @NoArgsConstructor
 @Entity
 public class UserEntity {
     @Id // 기본 키와 매핑될 필드에 지정
-    @GeneratedValue // 식별자 자동 생성, column에 필요
+    @GeneratedValue
     private Long loginId;
 
     @Column(nullable = false, unique = true)
@@ -26,7 +27,8 @@ public class UserEntity {
     @Column(length = 20, nullable = false)
     private String username; // 유저의 실명 또는 닉네임
 
-    @Transactional
+
+
     public void updateUser(String username, String email) {
         if (username != null) {
             this.username = username;
@@ -35,6 +37,13 @@ public class UserEntity {
         if (email != null) {
             this.email = email;
         }
+    }
+
+    public UserEntity(UserDto userDto){
+        this.loginId=userDto.getLoginId();
+        this.email = userDto.getEmail();
+        this.username = userDto.getUsername();
+        this.pw = userDto.getPw();
     }
 
 

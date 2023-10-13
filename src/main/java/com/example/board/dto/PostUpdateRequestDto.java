@@ -1,5 +1,6 @@
 package com.example.board.dto;
 
+import com.example.board.entity.PostEntity;
 import com.example.board.enums.CategoryEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +19,5 @@ public class PostUpdateRequestDto {
                 this.title = title;
                 this.content = content;
         }
+
 }
