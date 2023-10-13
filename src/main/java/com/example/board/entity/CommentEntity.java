@@ -34,7 +34,7 @@ public class CommentEntity {
     private List<ReplyEntity> replies;
 
     @Builder
-    public CommentEntity(Long commentId, String content, PostEntity post, UserEntity user, int likeCnt, CommentEntity parentComment, List<ReplyEntity> replies) {
+    public CommentEntity(Long commentId, String content, PostEntity post, String username, int likeCnt, CommentEntity parentComment, List<ReplyEntity> replies) {
         this.commentId = commentId;
         this.content = content;
         this.post = post;
@@ -44,7 +44,4 @@ public class CommentEntity {
         this.replies = replies;
     }
 
-    public List<ReplyEntity> getReplies() {
-        return replies;
-    }
 }

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -32,8 +31,5 @@ public class ReplyEntity {
         this.user = user;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
 
 }
