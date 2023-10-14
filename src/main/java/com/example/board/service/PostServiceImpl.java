@@ -5,12 +5,13 @@ import com.example.board.dto.PostListResponseDto;
 import com.example.board.dto.PostResponseDto;
 import com.example.board.dto.PostUpdateRequestDto;
 import com.example.board.entity.PostEntity;
+import com.example.board.error.ErrorCode;
+import com.example.board.error.exception.PostNotFoundException;
 import com.example.board.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostUpdateRequestDto updatePost(Long postId, PostUpdateRequestDto postUpdateRequestDto) {
         PostEntity existingPost = postRepository.findById(postId)
-                .orElseThrow(() -> new EntityNotFoundException("게시물을 찾을 수 없습니다."));
+                .orElseThrow(() -> new PostNotFoundException("해당 게시글을 찾을 수 없습니다.", ErrorCode.POST_NOT_FOUND_EXCEPTION));
         existingPost.update(postUpdateRequestDto.getTitle(), postUpdateRequestDto.getContent());
         PostEntity postEntity = postRepository.save(existingPost);
 
@@ -63,7 +64,7 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public void delete(Long id) {
         PostEntity postEntity = postRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+                new PostNotFoundException("해당 게시글이 존재하지 않습니다.",ErrorCode.POST_NOT_FOUND_EXCEPTION));
         postRepository.delete(postEntity);
 
     }

@@ -2,6 +2,8 @@ package com.example.board.service;
 
 import com.example.board.entity.CommentEntity;
 import com.example.board.entity.ReplyEntity;
+import com.example.board.error.ErrorCode;
+import com.example.board.error.exception.CmtNotFoundException;
 import com.example.board.repository.CommentRepository;
 import com.example.board.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,7 @@ public class CommentServiceImpl implements CommentService {
     public void addReply(Long parentId, String replyContent) {
         CommentEntity parentComment = commentRepository.findById(parentId).orElse(null);
         if (parentComment == null) {
-            throw new IllegalArgumentException("상위 댓글이 존재하지 않습니다.");
+            throw new CmtNotFoundException("상위 댓글이 존재하지 않습니다.", ErrorCode.CMT_NOT_FOUND_EXCEPTION);
         }
 
         ReplyEntity reply = ReplyEntity.builder()

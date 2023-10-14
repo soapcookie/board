@@ -3,11 +3,12 @@ package com.example.board.service;
 import com.example.board.dto.UserDto;
 import com.example.board.dto.UserUpdateDto;
 import com.example.board.entity.UserEntity;
+import com.example.board.error.ErrorCode;
+import com.example.board.error.exception.UserNotFoundException;
 import com.example.board.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserById(Long loginId) {
         // 사용자 조회 로직, 엔티티로 변환
         UserEntity userEntity = userRepository.findById(loginId)
-                .orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND_EXCEPTION, "사용자를 찾을 수 없습니다."));
         return new UserDto(userEntity);
     }
 
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserUpdateDto updateUser(Long loginId, UserUpdateDto updateDto) {
         UserEntity existingUser = userRepository.findById(loginId)
-                .orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND_EXCEPTION,"사용자를 찾을 수 없습니다."));
         existingUser.updateUser(updateDto.getUsername(), updateDto.getEmail());
         return new UserUpdateDto(existingUser);
     }
@@ -50,9 +51,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void deleteUser(Long loginId) {
         // 사용자 삭제 로직
-        UserEntity userEntity = userRepository.findById(loginId).orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다."));
+        UserEntity userEntity = userRepository.findById(loginId).orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND_EXCEPTION,"사용자를 찾을 수 없습니다."));
         userRepository.delete(userEntity);
     }
+
 
     @Override
     public UserDto findByEmail(String email) {
