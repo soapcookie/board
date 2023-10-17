@@ -3,16 +3,16 @@ package com.example.board.controller;
 import com.example.board.dto.UserDto;
 import com.example.board.dto.UserUpdateDto;
 import com.example.board.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     // 사용자 생성 엔드포인트
     @PostMapping("/")

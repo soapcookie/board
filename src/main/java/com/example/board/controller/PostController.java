@@ -1,10 +1,10 @@
 package com.example.board.controller;
 
-import com.example.board.dto.PostCreatRequestDto;
-import com.example.board.dto.PostListResponseDto;
-import com.example.board.dto.PostResponseDto;
-import com.example.board.dto.PostUpdateRequestDto;
+import com.example.board.dto.*;
 import com.example.board.service.PostService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +14,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/post")
 public class PostController {
-    private final PostService postService;
 
+    private final PostService postService;
     public PostController(PostService postService) {
         this.postService = postService;
 
@@ -37,8 +37,8 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponseDto> getPostById(@PathVariable Long id) {
-        PostResponseDto responseDto = postService.searchById(id);
+    public ResponseEntity<PostDto> getPostById(@PathVariable Long id) {
+        PostDto responseDto = postService.searchById(id);
         return ResponseEntity.ok(responseDto);
     }
 
@@ -52,6 +52,12 @@ public class PostController {
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<PostListDto> getPosts(@PageableDefault(size = 5, sort = "regDate", direction = Sort.Direction.DESC) Pageable pageable) {
+        PostListDto postListDto = postService.getPosts(pageable);
+        return ResponseEntity.ok(postListDto);
     }
 
 

@@ -35,7 +35,7 @@ public class PostEntity {
 
 
     @CreatedDate
-    private LocalDateTime regDate; // 등록 날짜
+    private LocalDateTime regDate;// 등록 날짜
 
     private LocalDateTime updateDate; // 수정 날짜 추가
 

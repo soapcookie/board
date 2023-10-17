@@ -1,10 +1,7 @@
 package com.example.board.service;
 
-import com.example.board.dto.PostCreatRequestDto;
-import com.example.board.dto.PostListResponseDto;
-import com.example.board.dto.PostResponseDto;
-import com.example.board.dto.PostUpdateRequestDto;
-import lombok.RequiredArgsConstructor;
+import com.example.board.dto.*;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +12,13 @@ public interface PostService {
     PostUpdateRequestDto updatePost(Long postId, PostUpdateRequestDto postUpdateRequestDto);
 
 
-    PostResponseDto searchById(Long id);
+    PostDto searchById(Long id);
     List<PostListResponseDto> searchAllDesc();
     void delete(Long id);
+
+    PostListDto getPosts(Pageable pageable);
+
+
+
 }
 

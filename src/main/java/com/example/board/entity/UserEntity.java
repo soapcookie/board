@@ -4,10 +4,9 @@ import com.example.board.dto.UserDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -26,6 +25,9 @@ public class UserEntity {
 
     @Column(length = 20, nullable = false)
     private String username; // 유저의 실명 또는 닉네임
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<PostEntity> posts = new ArrayList<>();
 
 
 
