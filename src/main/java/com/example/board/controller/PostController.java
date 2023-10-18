@@ -2,6 +2,7 @@ package com.example.board.controller;
 
 import com.example.board.dto.*;
 import com.example.board.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -13,13 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/post")
+@RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
-    public PostController(PostService postService) {
-        this.postService = postService;
-
-    }
 
     @PostMapping("/")
     public ResponseEntity<PostCreatRequestDto> createPost(@RequestBody PostCreatRequestDto postCreatRequestDto) {
