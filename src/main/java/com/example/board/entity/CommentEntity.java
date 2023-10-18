@@ -10,12 +10,14 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name="Comments_entity")
 public class CommentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId; // 댓글 식별 아이디
 
+    @Column
     private String content; // 댓글 내용
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,15 +35,5 @@ public class CommentEntity {
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
     private List<ReplyEntity> replies;
 
-    @Builder
-    public CommentEntity(Long commentId, String content, PostEntity post, String writer, int likeCnt, CommentEntity parentComment, List<ReplyEntity> replies) {
-        this.commentId = commentId;
-        this.content = content;
-        this.post = post;
-        this.writer = writer;
-        this.likeCnt = likeCnt;
-        this.parentComment = parentComment;
-        this.replies = replies;
-    }
 
 }

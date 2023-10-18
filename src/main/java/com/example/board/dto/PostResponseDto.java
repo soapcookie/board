@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class PostDto {
+public class PostResponseDto {
     private Long id;
     private String title;
     private String content;
@@ -25,7 +25,7 @@ public class PostDto {
     private int viewCnt;
     private boolean delYn;
 
-    public PostDto(PostEntity postEntity){
+    public PostResponseDto(PostEntity postEntity){
         this.id = postEntity.getId();
         this.title = postEntity.getTitle();
         this.writer = postEntity.getWriter();

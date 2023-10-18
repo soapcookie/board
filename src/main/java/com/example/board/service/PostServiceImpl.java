@@ -7,6 +7,8 @@ import com.example.board.error.exception.PostNotFoundException;
 import com.example.board.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +26,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostCreatRequestDto createPost(PostCreatRequestDto postCreateRequestDto) {
-        PostEntity postEntity = new PostEntity(postCreateRequestDto);
+        PostEntity postEntity = new PostEntity();
+        postEntity.toEntity(postCreateRequestDto);
         postRepository.save(postEntity);
         return postCreateRequestDto;
     }
@@ -49,9 +52,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional(readOnly = true)
-    public PostDto searchById(Long id) {
+    public PostResponseDto searchById(Long id) {
         PostEntity postEntity = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
-        return new PostDto(postEntity);
+        return new PostResponseDto(postEntity);
     }
 
     @Override
@@ -73,22 +76,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostListDto getPosts(Pageable pageable) {
-        Page<PostEntity> postPage = postRepository.findAll(pageable);
+    public Page<PostResponseDto> getPosts(int page) {
 
-        List<PostDto> postDtoList = postPage.map(post -> {
-            PostDto postDto = new PostDto();
-            postDto.setId(post.getId());
-            postDto.setTitle(post.getTitle());
-            postDto.setContent(post.getContent());
-            postDto.setRegDate(post.getRegDate());
-            return postDto;
-        }).getContent();
+        PageRequest pageRequest = PageRequest.of(page-1, 20);
 
-        PostListDto postListDto = new PostListDto(postDtoList, postPage.getTotalPages());
+        Page<PostEntity> postPage = postRepository.findAllByOrderByRegDateDesc(pageRequest);
 
-        return postListDto;
+
+        return new PageImpl<>(postPage.getContent().stream().map(PostResponseDto::new)
+                .collect(Collectors.toList()),
+                pageRequest, postPage.getTotalElements());
+
+
+
     }
+
+
 
 
 

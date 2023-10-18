@@ -20,7 +20,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        UserEntity userEntity = new UserEntity(userDto);
+        UserEntity userEntity = new UserEntity();
+        userEntity.toEntity(userDto);
         userRepository.save(userEntity);
     // save는 db가 return 안함
         return userDto;

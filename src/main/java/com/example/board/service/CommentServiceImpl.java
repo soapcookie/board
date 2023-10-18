@@ -22,12 +22,11 @@ public class CommentServiceImpl implements CommentService {
         if (parentComment == null) {
             throw new CmtNotFoundException("상위 댓글이 존재하지 않습니다.", ErrorCode.CMT_NOT_FOUND_EXCEPTION);
         }
-
         ReplyEntity reply = ReplyEntity.builder()
                 .content(replyContent)
+                .writer("dumy")
                 .parentComment(parentComment)
                 .build();
-
         // 엔티티 저장
         replyRepository.save(reply);
 

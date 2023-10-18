@@ -12,10 +12,11 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name="users_entity")
 public class UserEntity {
-    @Id // 기본 키와 매핑될 필드에 지정
-    @GeneratedValue
-    private Long loginId;
+    @Id
+    @Column(name = "userId")
+    private String userId;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -41,8 +42,8 @@ public class UserEntity {
         }
     }
 
-    public UserEntity(UserDto userDto){
-        this.loginId=userDto.getLoginId();
+    public void toEntity(UserDto userDto) {
+        this.userId = String.valueOf(userDto.getLoginId()); // long 값을 String으로 변환
         this.email = userDto.getEmail();
         this.username = userDto.getUsername();
         this.pw = userDto.getPw();

@@ -1,6 +1,7 @@
 package com.example.board.service;
 
 import com.example.board.dto.*;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +13,11 @@ public interface PostService {
     PostUpdateRequestDto updatePost(Long postId, PostUpdateRequestDto postUpdateRequestDto);
 
 
-    PostDto searchById(Long id);
+    PostResponseDto searchById(Long id);
     List<PostListResponseDto> searchAllDesc();
     void delete(Long id);
 
-    PostListDto getPosts(Pageable pageable);
+    Page<PostResponseDto> getPosts(int page);
 
 
 

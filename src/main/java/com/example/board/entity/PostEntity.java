@@ -10,17 +10,21 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity(name = "post_entity")
+@Entity
 @Getter
 @NoArgsConstructor
+@Table(name="posts_entity")
 public class PostEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
+
+    @Column
     private String title; // 제목
+
     private String content; // 내용
+
     private String writer; //작성자
 
     @ElementCollection(targetClass = CategoryEnum.class)  // 열거형 리스트 설정
@@ -39,10 +43,11 @@ public class PostEntity {
 
     private LocalDateTime updateDate; // 수정 날짜 추가
 
+
     private int viewCnt; // 조회수
     private boolean delYn; // 삭제 여부
 
-    @Column(name = "like_cnt")
+    @Column(name = "likeCnt")
     private int likeCnt;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -58,12 +63,10 @@ public class PostEntity {
     }
 
 
-    public PostEntity(PostCreatRequestDto postCreatRequestDto){
+    public void toEntity(PostCreatRequestDto postCreatRequestDto){
         this.writer = postCreatRequestDto.getWriter();
         this.title = postCreatRequestDto.getTitle();
         this.content = postCreatRequestDto.getContent();
     }
-
-
 
 }

@@ -10,7 +10,9 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity, Long> {
-    List<PostEntity> findAllByOrderByIdDesc();
+    public List<PostEntity> findAllByOrderByIdDesc();
+    public Page<PostEntity> findAllByOrderByRegDateDesc(Pageable pageable);
 
+//    public Page<BoardEntity> findByBoardTypeOrderByIdDesc(BoardType boardType,Pageable pageable);
 
 }

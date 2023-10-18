@@ -3,6 +3,7 @@ package com.example.board.controller;
 import com.example.board.dto.*;
 import com.example.board.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -35,8 +36,8 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostDto> getPostById(@PathVariable Long id) {
-        PostDto responseDto = postService.searchById(id);
+    public ResponseEntity<PostResponseDto> getPostById(@PathVariable Long id) {
+        PostResponseDto responseDto = postService.searchById(id);
         return ResponseEntity.ok(responseDto);
     }
 
@@ -53,9 +54,8 @@ public class PostController {
     }
 
     @GetMapping("/page")
-    public ResponseEntity<PostListDto> getPosts(@PageableDefault(size = 5, sort = "regDate", direction = Sort.Direction.DESC) Pageable pageable) {
-        PostListDto postListDto = postService.getPosts(pageable);
-        return ResponseEntity.ok(postListDto);
+    public Page<PostResponseDto> getPosts(@RequestParam int page) {
+        return postService.getPosts(page);
     }
 
 

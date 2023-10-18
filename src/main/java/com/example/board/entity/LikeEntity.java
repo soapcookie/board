@@ -10,9 +10,11 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name="likes_entity")
 public class LikeEntity {
     @Id
     @GeneratedValue
+    @Column
     private Long likeId; // 좋아요 식별 아이디
 
     @ManyToOne(fetch = FetchType.LAZY)

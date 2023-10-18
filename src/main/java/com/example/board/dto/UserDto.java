@@ -7,15 +7,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserDto {
-    private long loginId;
+    private String loginId;
     private String email;
     private String pw;
     private String username;
 
-    public UserDto(UserEntity userEntity){
-        this.loginId = userEntity.getLoginId();
+    public UserDto(UserEntity userEntity) {
+        this.loginId = userEntity.getUserId(); // 변경 없음
         this.email = userEntity.getEmail();
         this.pw = userEntity.getPw();
         this.username = userEntity.getUsername();
     }
+
 }
