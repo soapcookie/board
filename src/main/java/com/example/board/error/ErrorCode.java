@@ -17,8 +17,10 @@ public enum ErrorCode {
     CONFLICT_EXCEPTION(HttpStatus.CONFLICT, "409", "409 Conflict"),
     INVALID_TOKEN_EXCEPTION(HttpStatus.UNAUTHORIZED, "401_Invalid", "Invalid access: token in blacklist"),
     EMAIL_DUPLICATION(HttpStatus.BAD_REQUEST, "400", "duplicated email"),
-    USER_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "404", "user not found"),
-    POST_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "404", "post not found");
+    NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "404", "user not found"),
+    POST_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "404", "post not found"),
+    JWT_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "401_Invalid", "JWT token has expired");
+
 
     private final HttpStatus status;
     private final String code;

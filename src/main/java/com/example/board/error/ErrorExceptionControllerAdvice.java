@@ -41,8 +41,8 @@ public class ErrorExceptionControllerAdvice {
 
 
 
-    @ExceptionHandler({UserNotFoundException.class})
-    public ResponseEntity<ErrorEntity> exceptionHandler(HttpServletRequest request, final UserNotFoundException e) {
+    @ExceptionHandler({NotFoundException.class})
+    public ResponseEntity<ErrorEntity> exceptionHandler(HttpServletRequest request, final NotFoundException e) {
         return ResponseEntity
                 .status(e.getErrorCode().getStatus())
                 .body(ErrorEntity.builder()
@@ -94,6 +94,16 @@ public class ErrorExceptionControllerAdvice {
 
     @ExceptionHandler({InvalidTokenException.class})
     public ResponseEntity<ErrorEntity> exceptionHandler(HttpServletRequest request, final InvalidTokenException e) {
+        return ResponseEntity
+                .status(e.getErrorCode().getStatus())
+                .body(ErrorEntity.builder()
+                        .errorCode(e.getErrorCode().getCode())
+                        .errorMessage(e.getErrorCode().getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler({JwtExpiredException.class})
+    public ResponseEntity<ErrorEntity> exceptionHandler(HttpServletRequest request, final JwtExpiredException e) {
         return ResponseEntity
                 .status(e.getErrorCode().getStatus())
                 .body(ErrorEntity.builder()

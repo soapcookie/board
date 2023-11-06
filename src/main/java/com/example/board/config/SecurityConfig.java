@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 //로그인 회원가입 인증 필터 미적용
-                .antMatchers(HttpMethod.GET,"/user/").permitAll()
+                .antMatchers(HttpMethod.GET,"/users/").permitAll()
         //권한 필요한 api들 여기에 넣기
         //나머지 요청에서는 제한없이 호출
                 .anyRequest().permitAll()

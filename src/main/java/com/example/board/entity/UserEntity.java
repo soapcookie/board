@@ -1,6 +1,7 @@
 package com.example.board.entity;
 
 import com.example.board.dto.UserDto;
+import com.example.board.enums.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name="users_entity")
+@Table
 public class UserEntity {
     @Id
     @Column(name = "userId")
@@ -49,6 +50,9 @@ public class UserEntity {
         this.pw = userDto.getPw();
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole userRole;
 
 
 }
