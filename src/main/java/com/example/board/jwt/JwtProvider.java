@@ -31,7 +31,7 @@ public class JwtProvider {
 
     private final UserRepository userRepository;
     private final CustomUserDetailService customUserDetailService;
-    @Value("${jwt.secretKey}")
+    @Value("${jwt.secret}")
     private String secretKey;
 
     @Value("${jwt.accessExpiration}")
