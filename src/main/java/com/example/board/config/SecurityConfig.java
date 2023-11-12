@@ -2,6 +2,7 @@ package com.example.board.config;
 
 
 import com.example.board.jwt.JwtAuthenticationTokenFilter;
+import com.example.board.jwt.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
     private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -42,6 +44,8 @@ public class SecurityConfig {
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter, BasicAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthorizationFilter, JwtAuthenticationTokenFilter.class)
+
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
