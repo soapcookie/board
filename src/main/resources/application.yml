@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://test.cwppb9uozmaf.ap-northeast-2.rds.amazonaws.com:3306
+    username: ENC(4efLfCO9Oo6myu88kM+dfYRmc6dtiy/DDbgiwBE/ero1Z7pF+QDaIYNbs9as+6/d)
+    password: ENC(dRjLYhXWV0rdNGT80EAZBQXtbSLvecMraVmpSoze8utZfBUoWIQh7wAZzIa5+MID)
+
+  jpa:
+    show-sql: true
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+
+management:
+  endpoints:
+    jmxa
+  exposure:
+  include: "*"
+  jmx:
+    enabled: true
+  jmx.server:
+    port: 8080
+
+jwt:
+  accessExpiration : 1000
+  secret: ENC(lTajaStZnpXqD3l57eClUMsgYxOcff7PuSU84mwqcC1Y1BYcSoRL27gXmRwbvJXTm+iX5KlwkkrmVbXlDGfUV3AFn43RWH+1X/TIBizbkNQgpIdinuvmfGcl4yd3Ih0PHZZiQPEDW8ckFLQFbt6mh6onU1rNpRGmK1qcvwKwV7rYKElzgpGNDd+AG+H8qYbvC1gANVmFZueBJD+LZRTnw3saYe5qjcvOlrzNkFYf3yY=)
+  refreshExpiration: 1209600000
+jasypt:
+  encryptor:
+    bean: jasyptEncsryptorAES
