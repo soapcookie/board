@@ -27,6 +27,8 @@ jwt:
   accessExpiration : 1000
   secret: ENC(lTajaStZnpXqD3l57eClUMsgYxOcff7PuSU84mwqcC1Y1BYcSoRL27gXmRwbvJXTm+iX5KlwkkrmVbXlDGfUV3AFn43RWH+1X/TIBizbkNQgpIdinuvmfGcl4yd3Ih0PHZZiQPEDW8ckFLQFbt6mh6onU1rNpRGmK1qcvwKwV7rYKElzgpGNDd+AG+H8qYbvC1gANVmFZueBJD+LZRTnw3saYe5qjcvOlrzNkFYf3yY=)
   refreshExpiration: 1209600000
+
+
 jasypt:
   encryptor:
-    bean: jasyptEncsryptorAES
+    bean: jasyptEncryptorAES
