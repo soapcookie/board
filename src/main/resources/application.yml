@@ -3,9 +3,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://test.cwppb9uozmaf.ap-northeast-2.rds.amazonaws.com:3306
+    url: jdbc:mysql://test.cwppb9uozmaf.ap-northeast-2.rds.amazonaws.com:3306/boardDB
     username: ENC(4efLfCO9Oo6myu88kM+dfYRmc6dtiy/DDbgiwBE/ero1Z7pF+QDaIYNbs9as+6/d)
     password: ENC(dRjLYhXWV0rdNGT80EAZBQXtbSLvecMraVmpSoze8utZfBUoWIQh7wAZzIa5+MID)
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     show-sql: true
@@ -19,7 +20,7 @@ management:
   exposure:
   include: "*"
   jmx:
-    enabled: true
+  nabled: true
   jmx.server:
     port: 8080
 
